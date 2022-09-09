@@ -24,7 +24,7 @@ CMD ($ANDROID_SDK/tools/emulator @aName -no-skin -no-audio -no-window)
 
 FROM bu
 ENV DEBIAN_FRONTEND=noninteractive
-ARG ROOT_PASSWORD
+ARG ROOT_WORD
 RUN sed -i.bak -e "s%http://us.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
 
 # Install packages
@@ -60,7 +60,7 @@ RUN pip3 install gym
 
 # set up ssh
 RUN mkdir -p /var/run/sshd
-RUN echo root:${ROOT_PASSWORD}| chpasswd
+# RUN echo "root:172299"| chpasswd
 
 RUN sed -i 's/#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
@@ -75,7 +75,7 @@ RUN mkdir -p /opt/noVNC/utils/websockify && \
 
 # add user
 RUN useradd -m -s /bin/bash user
-RUN echo user:${ROOT_PASSWORD}| chpasswd
+RUN echo "user:172299" | chpasswd
 WORKDIR /home/user/workspace
 
 USER root
